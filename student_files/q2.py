@@ -1,6 +1,6 @@
 import sys
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, max, min
+from pyspark.sql.functions import col, max, min, count
 
 # you may add more import if you need to
 
@@ -19,7 +19,9 @@ grp = ["Price Range", "City"]
 best = df.groupBy(grp).agg(max("Rating")).withColumn("Rating", col("max(Rating)")).drop("max(Rating)")
 worst = df.groupBy(grp).agg(min("Rating")).withColumn("Rating", col("min(Rating)")).drop("min(Rating)")
 
+print("Best: ", best.count(), " Worst: ", worst.count())
 combined = best.union(worst)
+print("Combined: ", combined.count())
 combined.show()
 
 
