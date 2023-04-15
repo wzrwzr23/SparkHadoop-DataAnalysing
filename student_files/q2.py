@@ -17,11 +17,12 @@ df = df.na.drop(subset=["Price Range"])
 
 best = df.groupBy(["Price Range", "City"]).agg(max("Rating")).withColumn("Rating", col("max(Rating)")).drop("max(Rating)")
 worst = df.groupBy(["Price Range", "City"]).agg(min("Rating")).withColumn("Rating", col("min(Rating)")).drop("min(Rating)")
-
+best.show()
+worst.show()
 unioned = best.union(worst)
 joined = unioned.join(df, on=["Price Range", "City", "Rating"], how="inner")
 joined = joined.orderBy("City").dropDuplicates(["Price Range", "City", "Rating"])
-joined.show()
+# joined.show()
 
 
 joined.write.csv("hdfs://%s:9000/assignment2/output/question1/" % (hdfs_nn), header=True)
