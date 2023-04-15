@@ -22,7 +22,7 @@ worst = df.groupBy(["Price Range", "City"]).agg(min("Rating")).withColumn("Ratin
 unioned = best.union(worst)
 joined = unioned.join(df, on=["Price Range", "City", "Rating"], how="inner")
 joined = joined.orderBy("City").dropDuplicates(["Price Range", "City", "Rating"])
-# joined.show()
+joined.show()
 
 
 joined.write.csv("hdfs://%s:9000/assignment2/output/question2/" % (hdfs_nn), header=True)
