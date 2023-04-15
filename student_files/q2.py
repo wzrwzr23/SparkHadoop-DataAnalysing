@@ -20,7 +20,7 @@ worst = df.groupBy(["Price Range", "City"]).agg(min("Rating")).withColumn("Ratin
 
 unioned = best.union(worst)
 joined = unioned.join(df, on=["Price Range", "City", "Rating"], how="inner")
-joined = joined.dropDuplicates(["Price Range", "City", "Rating"])
+joined = joined.groupBy("City").dropDuplicates(["Price Range", "City", "Rating"])
 joined.show()
 
 
