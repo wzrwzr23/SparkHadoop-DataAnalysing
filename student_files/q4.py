@@ -18,5 +18,7 @@ df = df.withColumn("Cuisine Style", regexp_replace("Cuisine Style", "\\[", ""))\
     .withColumn("Cuisine Style", split(col("Cuisine Style"), ", "))\
     .withColumn("Cuisine Style", explode("Cuisine Style"))\
     .withColumn("Cuisine Style", regexp_replace("Cuisine Style", "'", ""))\
-    .withColumn("Cuisine Style", trim(col("Cuisine Style")))
+    .withColumn("Cuisine Style", trim(col("Cuisine Style")))\
+    .withColumn("Cuisine", col("Cuisine Style"))\
+    .drop("Cuisine Style")
 df.show()
