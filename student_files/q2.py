@@ -16,8 +16,8 @@ df = spark.read.option("header",True).csv("hdfs://%s:9000/assignment2/part1/inpu
 df = df.na.drop(subset=["Price Range"])
 
 grp = ["Price Range", "City"]
-best = df.groupBy(grp).agg(max("Rating")).withColumn("Rating", col("max(Rating)"))
-worst = df.groupBy(grp).agg(min("Rating")).withColumn("Rating", col("min(Rating)"))
+best = df.groupBy(grp).agg(max("Rating")).withColumn("Rating", col("max(Rating)")).drop("max(Rating)")
+worst = df.groupBy(grp).agg(min("Rating")).withColumn("Rating", col("min(Rating)")).drop("min(Rating)")
 
 combined = best.union(worst)
 combined.show()

@@ -15,6 +15,7 @@ spark = SparkSession.builder.appName("Assigment 2 Question 1").getOrCreate()
 df = spark.read.option("header",True).csv("hdfs://%s:9000/assignment2/part1/input/" % (hdfs_nn))
 
 df = df.filter(col("Reviews")!="[[], []]").filter(col("Rating")>=1.0)
+df.show()
 
 df.write.csv("hdfs://%s:9000/assignment2/output/question1/" % (hdfs_nn), header=True)
-df.show()
+
