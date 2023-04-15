@@ -3,7 +3,7 @@
 echo "1004867,1004874"
 
 # change the following according to your environment
-hdfs_namenode="localhost"
+hdfs_namenode="172.31.19.233"
 
 # don't change following
 
