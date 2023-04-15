@@ -1,6 +1,6 @@
 import sys
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, max, min, count
+from pyspark.sql.functions import col, max, min
 
 # you may add more import if you need to
 
@@ -15,16 +15,13 @@ df = spark.read.option("header",True).csv("hdfs://%s:9000/assignment2/part1/inpu
 
 df = df.na.drop(subset=["Price Range"])
 
-grp = ["Price Range", "City"]
-best = df.groupBy(grp).agg(max("Rating")).withColumn("Rating", col("max(Rating)")).drop("max(Rating)")
-worst = df.groupBy(grp).agg(min("Rating")).withColumn("Rating", col("min(Rating)")).drop("min(Rating)")
+best = df.groupBy(["Price Range", "City"]).agg(max("Rating")).withColumn("Rating", col("max(Rating)")).drop("max(Rating)")
+worst = df.groupBy(["Price Range", "City"]).agg(min("Rating")).withColumn("Rating", col("min(Rating)")).drop("min(Rating)")
 
-print("Best: ", best.count(), " Worst: ", worst.count())
-combined = best.union(worst)
-print("Combined: ", combined.count())
-combined.show()
-
+unioned = best.union(worst)
+joined = unioned.join(df, on=["Price Range", "City", "Rating"], how="inner")
+joined = joined.dropDuplicates(["Price Range", "City", "Rating"])
+joined.show()
 
 
-df.write.csv("hdfs://%s:9000/assignment2/output/question1/" % (hdfs_nn), header=True)
-df.show()
+joined.write.csv("hdfs://%s:9000/assignment2/output/question1/" % (hdfs_nn), header=True)
