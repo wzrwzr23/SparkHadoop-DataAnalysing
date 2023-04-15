@@ -1,6 +1,6 @@
 import sys
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, split, explode, regexp_replace, trim
+from pyspark.sql.functions import col, split, explode, regexp_replace, trim, count
 
 # you may add more import if you need to
 
@@ -20,5 +20,8 @@ df = df.withColumn("Cuisine Style", regexp_replace("Cuisine Style", "\\[", ""))\
     .withColumn("Cuisine Style", regexp_replace("Cuisine Style", "'", ""))\
     .withColumn("Cuisine Style", trim(col("Cuisine Style")))\
     .withColumn("Cuisine", col("Cuisine Style"))\
-    .drop("Cuisine Style")
+    .drop("Cuisine Style")\
+    .groupBy("City", "Cuisine")\
+    .agg(count("Name")).sort("City")
 df.show()
+df.write.csv("hdfs://%s:9000/assignment2/output/question4/" % (hdfs_nn), header=True)
