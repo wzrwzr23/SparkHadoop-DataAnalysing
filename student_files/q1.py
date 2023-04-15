@@ -3,9 +3,6 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, count
 # you may add more import if you need to
 
-# Develop a Spark application that cleans up the CSV file by removing rows
-# with no reviews or rating < 1.0. Write the output as CSV into HDFS path
-# /assignment2/output/question1/.
 # don't change this line
 hdfs_nn = sys.argv[1]
 

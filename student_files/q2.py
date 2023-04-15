@@ -25,4 +25,4 @@ joined = joined.orderBy("City").dropDuplicates(["Price Range", "City", "Rating"]
 # joined.show()
 
 
-joined.write.csv("hdfs://%s:9000/assignment2/output/question1/" % (hdfs_nn), header=True)
+joined.write.csv("hdfs://%s:9000/assignment2/output/question2/" % (hdfs_nn), header=True)

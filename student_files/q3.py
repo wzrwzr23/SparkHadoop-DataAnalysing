@@ -32,4 +32,4 @@ rev_df = df.withColumn("rev", reviews.getItem(0))\
         .withColumn("review", trim(col("review")))\
         .withColumn("date", trim(col("date")))
 rev_df.show()
-rev_df.write.csv("hdfs://%s:9000/assignment2/output/question1/" % (hdfs_nn), header=True)
+rev_df.write.csv("hdfs://%s:9000/assignment2/output/question3/" % (hdfs_nn), header=True)
