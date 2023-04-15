@@ -12,6 +12,6 @@ spark = SparkSession.builder.appName("Assigment 2 Question 3").getOrCreate()
 # YOUR CODE GOES BELOW
 df = spark.read.option("header",True).csv("hdfs://%s:9000/assignment2/part1/input/" % (hdfs_nn))
 
-review = split(col("Review"), '\\], \\[')
+review = split(df["Review"], '\\], \\[')
 rev_df = df.withColumn("review", review.getItem(0).withColumn("date", review.getItem(1)))
 rev_df.show()
