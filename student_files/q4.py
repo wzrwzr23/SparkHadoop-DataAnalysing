@@ -24,6 +24,6 @@ df = df.withColumn("Cuisine Style", regexp_replace("Cuisine Style", "\\[", ""))\
     .groupBy("City", "Cuisine")\
     .agg(count("Name")).sort("City")\
     .withColumn("count", col("count(Name)"))\
-    drop(col("count(Name)"))
+    .drop(col("count(Name)"))
 df.show()
 df.write.csv("hdfs://%s:9000/assignment2/output/question4/" % (hdfs_nn), header=True)
