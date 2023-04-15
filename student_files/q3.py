@@ -1,6 +1,6 @@
 import sys
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, split, arrays_zip, explode, regexp_replace
+from pyspark.sql.functions import col, split, arrays_zip, explode, regexp_replace, trim
 
 # you may add more import if you need to
 
@@ -29,6 +29,7 @@ rev_df = df.withColumn("rev", reviews.getItem(0))\
         .withColumn("date", regexp_replace("date", "\\]", ""))\
         .withColumn("review", regexp_replace("review", "'", ""))\
         .withColumn("date", regexp_replace("date", "'", ""))\
-        .withColumn("date", regexp_replace("date", " ", ""))
+        .withColumn("review", trim(col("review")))\
+        .withColumn("date", trim(col("date")))
 rev_df.show()
 rev_df.write.csv("hdfs://%s:9000/assignment2/output/question1/" % (hdfs_nn), header=True)

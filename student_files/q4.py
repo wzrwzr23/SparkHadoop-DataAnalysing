@@ -1,6 +1,6 @@
 import sys
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, split, explode, regexp_replace
+from pyspark.sql.functions import col, split, explode, regexp_replace, trim
 
 # you may add more import if you need to
 
@@ -17,6 +17,6 @@ df = df.withColumn("Cuisine Style", regexp_replace("Cuisine Style", "\\[", ""))\
     .withColumn("Cuisine Style", regexp_replace("Cuisine Style", "\\]", ""))\
     .withColumn("Cuisine Style", split(col("Cuisine Style"), ", "))\
     .withColumn("Cuisine Style", explode("Cuisine Style"))\
-    .withColumn("Cuisine Style", regexp_replace("Cuisine Style", "'", ""))
-
+    .withColumn("Cuisine Style", regexp_replace("Cuisine Style", "'", ""))\
+    .withColumn("Cuisine Style", trim(col("Cuisine Style")))
 df.show()
