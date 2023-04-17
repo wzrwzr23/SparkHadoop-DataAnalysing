@@ -33,4 +33,4 @@ actor_pair = num.join(df, ["pair"], "inner")\
     .drop("pair", "count(1)")\
     .orderBy("movie_id")
 actor_pair.show()
-actor_pair.write.parquet("hdfs://%s:9000/assignment2/output/question5/" % (hdfs_nn), header=True)
+actor_pair.write.option("header", True).mode("overwrite").parquet("hdfs://%s:9000/assignment2/output/question5/" % (hdfs_nn))
